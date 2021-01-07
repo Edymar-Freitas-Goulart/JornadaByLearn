@@ -1,0 +1,62 @@
+menu1 = '''País de origem do produto:
+    1 - Estados Unidos
+    2 - México
+    3 - outros
+    Informe: '''
+menu2 = '''Meio de transporte do produto:
+T - terrestre
+F - fluvial
+A - aéreo
+Informe: '''
+menu3 = '''A carga é perigosa? (S-sim/N-não): '''
+while True:
+    preUni = float(input('Preço unitário (digite 0 ou menor para sair): '))
+    if preUni < 1:
+        break
+    preTot = 0
+    seguro = 0
+    pais = int(input(menu1))
+    while pais < 1 or pais > 3:
+        print('-'*50)
+        print('Por favor, digite um número válido')
+        pais = int(input(menu1))
+    transporte = str(input(menu2)).strip().upper()[0]
+    while transporte not in 'TFA':
+        print('-'*50)
+        print('Por favor, digite uma letra válida')
+        transporte = str(input(menu2)).strip().upper()[0]
+    carPer = str(input(menu3)).strip().upper()[0]
+    while carPer not in 'SN':
+        print('-'*50)
+        print('Por favor, digite uma letra válida')
+        carPer = str(input(menu3)).strip().upper()[0]
+    if preUni <= 100:
+        imposto = (preUni * 5) / 100
+    else:
+        imposto = (preUni * 10) / 100
+    preTot += preUni + imposto
+    if carPer == 'S':
+        if pais == 1:
+            valTr=50
+        elif pais == 2:
+            valTr=21
+        else:
+            valTr=24
+    else:
+        if pais == 1:
+            valTr=12
+        elif pais == 2:
+            valTr=21
+        else:
+            valTr=60
+    preTot+=valTr
+    if pais==2 or transporte=='A':
+        seguro=preUni/2
+        preTot+=seguro
+    print('-='*50)
+    print(f'''Preço unitário: R${preUni}
+Imposto: R${imposto}
+Valor do transporte: R${valTr}
+Seguro: R${seguro}
+Valor total: R${preTot}''')
+    print('-='*50)
